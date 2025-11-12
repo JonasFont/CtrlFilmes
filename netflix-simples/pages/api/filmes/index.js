@@ -2,8 +2,8 @@ import { conectarMongo } from "../../../lib/mongo";
 import Filme from "../../../models/Filme";
 
 export default async function handler(req, res) { //padrão de rota
-    await conectarMongo; //garate que estamos conectados ao banco
-    
+    await conectarMongo(); //garate que estamos conectados ao banco
+    //ERRO
     const metodo = req.method; //Obtem o metodos HTTP (GET< POST, etc...)
 
     if(metodo === "GET"){//Se for get: lista os filmes
@@ -24,7 +24,7 @@ export default async function handler(req, res) { //padrão de rota
             });
         }
     }
-    //res.setHeader("Allow", ["GET", "POST"]); //Indica os metodos permitidos
-    //return res.status(405).end("Metodo não permitido"); //405 metodo nao permitido
+    res.setHeader("Allow", ["GET", "POST"]); //Indica os metodos permitidos
+    return res.status(405).end("Método não permitido"); //405 metodo nao permitido
 }
 

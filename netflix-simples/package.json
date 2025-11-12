@@ -2,12 +2,13 @@
   "name": "netflix-simples",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "node scripts/seed.js"
+    "seed": "node seed.js"
   },
   "dependencies": {
     "dotenv": "^17.2.3",

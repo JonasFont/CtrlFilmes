@@ -1,19 +1,24 @@
-//importa o mongoose
-import mongoose from "mongoose"
+// Importa o mongoose
+import mongoose from "mongoose";
 
-let conexaoCah = null  //Guarda a conexao ativa 
+let conexaoCache = null;  // Cache da conexão ativa
 
-export async function conectarMongo(params) {
-    if(conexaoCah) return conexaoCah; //Se já temos a conexao, apenas retorna 
+export async function conectarMongo() {
+  // Se já temos conexão, reaproveitamos
+  if (conexaoCache) return conexaoCache;
 
-    const uri = process.env.MONGODB_URI; //Lê a URI do banco a partir do env
-    if(!uri){ //Valida se a URI e igual a do env
-        throw new Error("MONGODB_URI não definida no env ")
-    }
-    const instancia = await mongoose.connect(uri); //Conect ao MongoDB
-    conexaoCah = instancia; //Guarda no cache para reuso
-    console.log("Conectado ao MongoDB");
+  const uri = process.env.MONGODB_URI;  // Nome correto da variável
+  if (!uri) {
+    throw new Error("❌ ERRO: A variável MONGODB_URI não está definida no .env.local");
+  }
 
-    return conexaoCah; //Retorna a conexao
+  // Conexão
+  const instancia = await mongoose.connect(uri, {
+    dbName: "netflix"  // opcional, mas recomendado
+  });
+
+  conexaoCache = instancia; // Guarda no cache
+  console.log("🚀 Conectado ao MongoDB!");
+
+  return conexaoCache;
 }
-
